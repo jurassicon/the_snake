@@ -84,7 +84,7 @@ if __name__ == '__main__':
 #         )
 #         pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, last_rect)
 
-# Функция обработки действий пользовыателя
+# Функция обработки действий пользователя
 # def handle_keys(game_object):
 #     for event in pygame.event.get():
 #         if event.type == pygame.QUIT:
