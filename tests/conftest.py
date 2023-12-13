@@ -54,19 +54,33 @@ def write_timeout_reasons(text, stream=None):
 pytest_timeout.write = write_timeout_reasons
 
 
+def _create_game_object(class_name):
+    try:
+        return getattr(the_snake, class_name)()
+    except TypeError as error:
+        raise AssertionError(
+            f'При создании объекта класса `{class_name}` произошла ошибка:\n'
+            f'`{type(error).__name__}: {error}`\n'
+            f'Если в конструктор класса `{class_name}` помимо параметра '
+            '`self` передаются какие-то ещё параметры - убедитесь, что для '
+            'них установлены значения по умолчанию. Например:\n'
+            '`def __init__(self, <параметр>=<значение_по_умолчанию>):`'
+        )
+
+
 @pytest.fixture
 def game_object():
-    return the_snake.GameObject()
+    return _create_game_object('GameObject')
 
 
 @pytest.fixture
 def snake():
-    return the_snake.Snake()
+    return _create_game_object('Snake')
 
 
 @pytest.fixture
 def apple():
-    return the_snake.Apple()
+    return _create_game_object('Apple')
 
 
 class StopInfiniteLoop(Exception):
