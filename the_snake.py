@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import randint
 
 import pygame
 
@@ -148,6 +148,11 @@ class Snake(GameObject):
 
         # Если не растём, убираем хвост.
         self.last = self.positions.pop()
+
+        if new_head in self.positions[1:]:
+            self.show_game_over()
+            self.reset()
+            return
 
     def reset(self):
         """
