@@ -3,10 +3,6 @@ from random import randint
 
 import pygame
 
-# Сделал воспроизведение звука если змейка съест сама себя но тесты не пускают.
-# pygame.mixer.init()
-# game_over_sound = pygame.mixer.Sound('game_over.wav')
-
 
 # Константы для размеров поля и сетки.
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -173,7 +169,6 @@ class Snake(GameObject):
     def show_game_over():
         """Показываем сообщение если змейка съела себя."""
         font = pygame.font.Font(None, 50)  # Шрифт и размер.
-        # game_over_sound.play()  # Проигрываем звук Sad trombone =).
         text = font.render('Game Over!', True, (255, 0, 0))  # Красный текст.
         text_rect = text.get_rect(
             center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
