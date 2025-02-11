@@ -1,9 +1,9 @@
+
 from random import randint
 import pygame
 
-
 pygame.mixer.init()
-game_over_sound = pygame.mixer.Sound("game_over.wav")
+game_over_sound = pygame.mixer.Sound('game_over.wav')
 
 
 # Константы для размеров поля и сетки.
@@ -172,7 +172,7 @@ class Snake(GameObject):
         """Показываем сообщение если змейка съела себя."""
         font = pygame.font.Font(None, 50)  # Шрифт и размер.
         game_over_sound.play()  # Проигрываем звук Sad trombone =).
-        text = font.render("Game Over!", True, (255, 0, 0))  # Красный текст.
+        text = font.render('Game Over!', True, (255, 0, 0))  # Красный текст.
         text_rect = text.get_rect(
             center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         )  # Центр экрана.
