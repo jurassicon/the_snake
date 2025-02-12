@@ -43,6 +43,8 @@ class GameObject:
     """
     Базовый класс для всех игровых объектов.
     Position: начальная позиция объекта в виде кортежа (x, y).
+    Body_color: цвет заливки объекта.
+    Border_color: цвет границы объекта.
     """
 
     def __init__(self, position=SCREEN_CENTER):
@@ -52,8 +54,9 @@ class GameObject:
 
     def draw(self):
         """Заглушка метод будет переопределенн для каждого класса."""
-        raise (NotImplementedError
-               ('Draw() должен быть переопределенн в дочернем классе.'))
+        raise (NotImplementedError(
+            'Draw() должен быть переопределенн в дочернем классе.'
+        ))
 
     def draw_cell(self, position, color=None, border_color=None):
         """
@@ -66,17 +69,18 @@ class GameObject:
         self.border_color.
         """
         if color is None:
-            color = self.body_color  # Если цвет не задан,
-            # используем цвет объекта.
+            # Если цвет не задан, используем цвет объекта.
+            color = self.body_color
         if border_color is None:
-            border_color = self.border_color  # Если цвет границы нет,
-            # используем цвет границы объекта.
+            # Если цвет границы нет, используем цвет границы объекта.
+            border_color = self.border_color
 
-        rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))  # Создаём
-        # прямоугольник с позицией и размером.
-        pg.draw.rect(screen, color, rect)  # Рисуем заливку клетки.
-        pg.draw.rect(screen, border_color, rect, 1)  # Рисуем границу
-        # клетки.
+        # Создаём прямоугольник с позицией и размером.
+        rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
+        # Рисуем заливку клетки.
+        pg.draw.rect(screen, color, rect)
+        # Рисуем границу клетки.
+        pg.draw.rect(screen, border_color, rect, 1)
 
 
 class Apple(GameObject):
@@ -89,15 +93,13 @@ class Apple(GameObject):
     def __init__(
             self,
             position=SCREEN_CENTER,
-            body_color=None,
-            border_color=None,
+            body_color=APPLE_COLOR,  # Добавил параметр для цвета тела.
+            border_color=BORDER_COLOR,  # Добавил параметр для границы.
             occupied_positions=None
     ):
-        super().__init__(position)
-        self.body_color = body_color if body_color is not None else APPLE_COLOR
-        self.border_color = border_color if border_color is not None \
-            else BORDER_COLOR
-        self.reset()
+        super().__init__(position)  # Передаём позицию в GameObject.
+        self.body_color = body_color
+        self.border_color = border_color
         self.randomize_position(occupied_positions)
 
     def reset(self):
@@ -136,10 +138,15 @@ class Snake(GameObject):
     и методы: draw, get_head_position, move, reset, update_direction.
     """
 
-    def __init__(self, start_position=SCREEN_CENTER):
+    def __init__(
+            self,
+            start_position=SCREEN_CENTER,
+            body_color=SNAKE_COLOR,
+            border_color=BORDER_COLOR
+    ):
         super().__init__(start_position)
-        self.body_color = SNAKE_COLOR
-        self.border_color = BORDER_COLOR
+        self.body_color = body_color
+        self.border_color = border_color
 
         # Список позиций сегментов.
         self.positions = [start_position]
@@ -190,21 +197,11 @@ class Snake(GameObject):
 
     def reset(self):
         """Сбрасывает параметры змейки к начальному состоянию."""
-        self.positions = [self.position]  # Возвращаемся к позиции
+        self.positions = [self.position]  # Возвращаемся к позиции.
         # из GameObject.
         self.direction = RIGHT
         self.next_direction = None
         self.last = None
-
-    @staticmethod
-    def show_game_over():
-        """Показываем сообщение если змейка съела себя."""
-        font = pg.font.Font(None, 50)  # Шрифт и размер.
-        text = font.render('Game Over!', True, (255, 0, 0))  # Красный текст.
-        text_rect = text.get_rect(center=SCREEN_CENTER)  # Центрируем текст.
-        screen.blit(text, text_rect)  # Рисуем текст.
-        pg.display.flip()  # Обновляем экран.
-        pg.time.delay(2000)  # Делаем паузу 2 секунды.
 
     def grow(self):
         """Увеличивает длину змейки за счёт последнего сохранённого сегмента
@@ -237,7 +234,7 @@ def main():
     pg.init()
 
     # Создаём змейку.
-    snake = Snake(SCREEN_CENTER)
+    snake = Snake()
 
     # Создаём яблоко с учётом занятых позиций.
     apple = Apple(occupied_positions=snake.positions)
@@ -251,16 +248,17 @@ def main():
         snake.move()
         # Проверяем, не врезалась ли змейка в себя.
         if snake.get_head_position() in snake.positions[1:]:
-            snake.show_game_over()  # Вызываем Game Over.
+            # Вызываем Game Over.
+            show_game_over()
             snake.reset()
-            continue  # Или просто return, если хотим сразу выйти из цикла,
-            # в зависимости от логики.
+            # Перемещаем яблоко после сброса змейки.
+            apple.randomize_position(occupied_positions=snake.positions)
 
         # Проверяем, съела ли змейка яблоко.
-        if snake.get_head_position() == apple.position:
+        elif snake.get_head_position() == apple.position:
             snake.grow()
-            apple.randomize_position(occupied_positions=snake.positions)
             # Перемещаем яблоко.
+            apple.randomize_position(occupied_positions=snake.positions)
 
         # Отрисовка объектов.
         snake.draw()
@@ -268,6 +266,17 @@ def main():
 
         # Обновление экрана.
         pg.display.flip()
+
+
+def show_game_over():
+    """Показываем сообщение если змейка съела себя."""
+    font = pg.font.Font(None, 50)  # Шрифт и размер.
+    text = font.render('Game Over!', True, (255, 0, 0))
+    # Красный текст.
+    text_rect = text.get_rect(center=SCREEN_CENTER)  # Центрируем текст.
+    screen.blit(text, text_rect)  # Рисуем текст.
+    pg.display.flip()  # Обновляем экран.
+    pg.time.delay(2000)  # Делаем паузу 2 секунды.
 
 
 # Запуск игры.
