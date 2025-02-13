@@ -28,6 +28,12 @@ SNAKE_COLOR = (0, 255, 0)
 # Цвет границы - светло-голубой.
 BORDER_COLOR = (93, 216, 228)
 
+# Белый цвет тела по умолчанию.
+DEFAULT_BODY_COLOR = (255, 255, 255)
+
+# Серый цвет границы по умолчанию.
+DEFAULT_BORDER_COLOR = (200, 200, 200)
+
 # Скорость движения змейки.
 SPEED = 15
 
@@ -47,15 +53,20 @@ class GameObject:
     Border_color: цвет границы объекта.
     """
 
-    def __init__(self, position=SCREEN_CENTER):
+    def __init__(
+        self,
+        position=SCREEN_CENTER,
+        body_color=DEFAULT_BODY_COLOR,
+        border_color=DEFAULT_BORDER_COLOR,
+    ):
         self.position = position
-        self.body_color = None
-        self.border_color = None
+        self.body_color = body_color
+        self.border_color = border_color
 
     def draw(self):
-        """Заглушка метод будет переопределенн для каждого класса."""
+        """Заглушка метод будет переопределен для каждого класса."""
         raise (NotImplementedError(
-            'Draw() должен быть переопределенн в дочернем классе.'
+            'Draw() должен быть переопределен в дочернем классе.'
         ))
 
     def draw_cell(self, position, color=None, border_color=None):
@@ -68,9 +79,9 @@ class GameObject:
         Border_color: Цвет границы клетки. Если нет, используется
         self.border_color.
         """
-        if color is None:
-            # Если цвет не задан, используем цвет объекта.
-            color = self.body_color
+        # Если цвет не задан, используем цвет объекта.
+        color = color or self.body_color
+
         if border_color is None:
             # Если цвет границы нет, используем цвет границы объекта.
             border_color = self.border_color
@@ -95,19 +106,11 @@ class Apple(GameObject):
             position=SCREEN_CENTER,
             body_color=APPLE_COLOR,  # Добавил параметр для цвета тела.
             border_color=BORDER_COLOR,  # Добавил параметр для границы.
-            occupied_positions=None
+            occupied_positions=None,
     ):
-        super().__init__(position)  # Передаём позицию в GameObject.
-        self.body_color = body_color
-        self.border_color = border_color
+        # Передаём позицию в GameObject.
+        super().__init__(position, body_color, border_color)
         self.randomize_position(occupied_positions)
-
-    def reset(self):
-        """Сбрасывает параметры объекта к начальному состоянию."""
-        self.positions = [self.position]
-        self.next_direction = None
-        self.last = None
-        self.direction = choice([UP, DOWN, LEFT, RIGHT])
 
     def randomize_position(self, occupied_positions=None):
         """
@@ -142,15 +145,14 @@ class Snake(GameObject):
             self,
             start_position=SCREEN_CENTER,
             body_color=SNAKE_COLOR,
-            border_color=BORDER_COLOR
+            border_color=BORDER_COLOR,
     ):
-        super().__init__(start_position)
-        self.body_color = body_color
-        self.border_color = border_color
+        super().__init__(start_position, body_color, border_color)
 
         # Список позиций сегментов.
-        self.positions = [start_position]
+        self.positions = [self.position]
         self.direction = RIGHT
+        self.next_direction = None
 
         # Атрибуты для логики.
         self.last = None
@@ -197,9 +199,9 @@ class Snake(GameObject):
 
     def reset(self):
         """Сбрасывает параметры змейки к начальному состоянию."""
-        self.positions = [self.position]  # Возвращаемся к позиции.
-        # из GameObject.
-        self.direction = RIGHT
+        # Возвращаемся к позиции из GameObject.
+        self.positions = [self.position]
+        self.direction = choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
         self.last = None
 
