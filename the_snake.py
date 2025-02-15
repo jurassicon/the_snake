@@ -1,4 +1,3 @@
-
 from random import choice, randint
 
 import pygame as pg
@@ -54,10 +53,10 @@ class GameObject:
     """
 
     def __init__(
-        self,
-        position=SCREEN_CENTER,
-        body_color=DEFAULT_BODY_COLOR,
-        border_color=DEFAULT_BORDER_COLOR,
+            self,
+            position=SCREEN_CENTER,
+            body_color=DEFAULT_BODY_COLOR,
+            border_color=DEFAULT_BORDER_COLOR,
     ):
         self.position = position
         self.body_color = body_color
@@ -82,9 +81,8 @@ class GameObject:
         # Если цвет не задан, используем цвет объекта.
         color = color or self.body_color
 
-        if border_color is None:
-            # Если цвет границы нет, используем цвет границы объекта.
-            border_color = self.border_color
+        # Если цвет границы нет, используем цвет границы объекта.
+        border_color = border_color or self.border_color
 
         # Создаём прямоугольник с позицией и размером.
         rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
