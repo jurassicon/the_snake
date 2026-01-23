@@ -38,7 +38,7 @@ DEFAULT_BORDER_COLOR = (200, 200, 200)
 SPEED = 15
 
 # Путь к звуку завершения игры.
-GAME_OVER_SOUND_PATH = '/Users/cherkasov/Documents/Dev/the_snake/game_over.wav'
+GAME_OVER_SOUND_PATH = os.path.join(os.path.dirname(__file__), 'game_over.wav')
 
 # Настройка игрового окна.
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
