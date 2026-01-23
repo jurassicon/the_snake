@@ -55,5 +55,4 @@ flake8 .
 
 ## Автор
 [cherkasov]
-- Email: `cherkasoooov@gmail.com`
 - **[Telegram](https://t.me/iurii_cherkasov)**
