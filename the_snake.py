@@ -1,4 +1,5 @@
 from random import choice, randint
+import os
 
 import pygame as pg
 
@@ -35,6 +36,9 @@ DEFAULT_BORDER_COLOR = (200, 200, 200)
 
 # Скорость движения змейки.
 SPEED = 15
+
+# Путь к звуку завершения игры.
+GAME_OVER_SOUND_PATH = '/Users/cherkasov/Documents/Dev/the_snake/game_over.wav'
 
 # Настройка игрового окна.
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
@@ -270,6 +274,16 @@ def main():
 
 def show_game_over():
     """Показываем сообщение если змейка съела себя."""
+    # Проигрывание звука при завершении игры.
+    if os.path.exists(GAME_OVER_SOUND_PATH):
+        try:
+            pg.mixer.music.load(GAME_OVER_SOUND_PATH)
+            pg.mixer.music.play()
+        except pg.error:
+            # Если возникла ошибка при загрузке или проигрывании,
+            # просто игнорируем её.
+            pass
+
     font = pg.font.Font(None, 50)  # Шрифт и размер.
     text = font.render('Game Over!', True, (255, 0, 0))
     # Красный текст.
