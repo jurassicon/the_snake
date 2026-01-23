@@ -69,6 +69,6 @@ flake8 .
 
 ## Автор
 
-[cherkasov]
+Юрий Черкасов
 
 - **[Telegram](https://t.me/iurii_cherkasov)**
