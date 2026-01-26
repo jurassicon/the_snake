@@ -4,6 +4,10 @@ Classic snake game implemented in Python using the Pygame library.
 
 ## About
 
+
+https://github.com/user-attachments/assets/9ba0c491-ca34-422e-a0f6-6edc3472bd85
+
+
 In the game you control a snake, which must eat apples that appear on the
 screen. With each apple eaten, the snake grows in length. The game ends when
 the snake collides with itself.
