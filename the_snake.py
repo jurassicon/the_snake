@@ -42,7 +42,7 @@ GAME_OVER_SOUND_PATH = os.path.join(os.path.dirname(__file__), 'game_over.wav')
 
 # Настройка игрового окна.
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
-pg.display.set_caption('Змейка')
+pg.display.set_caption('The snake')
 
 # Настройка времени.
 clock = pg.time.Clock()
