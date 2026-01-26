@@ -1,74 +1,75 @@
 # The Snake game
 
-Классическая игра "Змейка", реализованная на Python с использованием библиотеки
-Pygame.
+Classic snake game implemented in Python using the Pygame library.
 
-## Описание
+## About
 
-В этой игре вы управляете змейкой, которая должна поедать яблоки, появляющиеся
-на экране. С каждым съеденным яблоком змейка увеличивается в длину. Игра
-заканчивается, если змейка врезается в саму себя.
+In the game you control a snake, which must eat apples that appear on the
+screen. With each apple eaten, the snake grows in length. The game ends when
+the snake collides with itself.
 
-## Особенности
+## Features
 
-- **Управление**: Используйте клавиши со стрелками (Вверх, Вниз, Влево, Вправо)
-  для изменения направления движения.
-- **Звуковые эффекты**: При завершении игры проигрывается звуковой сигнал (если
-  файл `game_over.wav` присутствует в папке проекта).
-- **Механика**: Змейка может проходить сквозь границы экрана, появляясь с
-  противоположной стороны.
-- **ООП**: Код написан с использованием объектно-ориентированного подхода.
+- **Control**: Use the arrow keys (Up, Down, Left, Right) to change the snake's
+  direction.
+- **Sound effects**: When the snake collides with itself, the game ends and the
+  sound effect plays if the `game_over.wav` file is present in the project
+  directory.
+- **Game mechanics**: The snake can move through the screen boundaries,
+  appearing on the opposite side.
+- **OOP**: Code is written using object-oriented programming principles.
 
-## Системные требования
+## System requirements
 
 - Python 3.12+
 - Pygame 2.5.2+
 
-## Установка и запуск
+## Installation and running
 
-1. **Клонируйте репозиторий**:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/jurassicon/the_snake
    cd the_snake
    ```
 
-2. **Установите зависимости**:
-   Рекомендуется использовать виртуальное окружение.
+2. **Install requirements**:
+   A virtual environment is required to avoid dependency conflicts with other
+   projects.
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Запустите игру**:
+3. **Start the game**:
    ```bash
    python the_snake.py
    ```
 
-## Структура проекта
+## Project structure
 
-- `the_snake.py` - основной файл игры с логикой и отрисовкой.
-- `game_over.wav` - звуковой файл, проигрываемый при окончании игры.
-- `requirements.txt` - список необходимых библиотек для работы проекта.
-- `tests/` - директория с тестами для проверки структуры кода и основной
-  логики.
+- `the_snake.py` - Main game logic and rendering is located here.
+- `game_over.wav` - Sound file, played on the game over screen.
+- `requirements.txt` - List of required libraries for the project to work.
+- `tests/` - Directory with tests for checking the code structure and
+  main logic.
 
-## Разработка
+## Development
 
-Для проверки качества кода используются `flake8` и `pytest`.
+For checking the code quality, `flake8` is used and `pytest` for testing.
 
-Запуск тестов:
+For running tests:
 
 ```bash
 pytest
 ```
 
-Проверка стиля кода:
+For checking code style:
 
 ```bash
 flake8 .
 ```
 
-## Автор
+## Author
 
-Юрий Черкасов
+Iurii Cherkasov
 
 - **[Telegram](https://t.me/iurii_cherkasov)**
